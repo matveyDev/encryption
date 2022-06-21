@@ -1,14 +1,24 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter
 
-from logic import EncryptorUploader
+from logic import EncryptorUploader, EncryptorAPI
 
 router = APIRouter()
-encryptor = EncryptorUploader()
+uploader = EncryptorUploader()
+API = EncryptorAPI()
 
 
 @router.get('/upload-encrypted-data', status_code=201)
 async def upload_encrypted_data() -> list[str]:
-    data = encryptor._get_encrypted_data()
-    encryptor.upload_database(data)
+    data = await API._get_encrypted_data()
+    uploader.upload_encrypted_data(data)
 
     return data
+
+
+@router.post('/upload-decrypted-data', status_code=201)
+async def upload_decrypted_data() -> list[str]:
+    encrypted_data = await API._get_encrypted_data()
+    decrypted_data = await API._get_decrypted_data(encrypted_data)
+    uploader.upload_decrypted_data(encrypted_data, decrypted_data)
+
+    return decrypted_data
