@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Response
 
 from logic import EncryptorBase
-from schemas import DecryptedList, EncryptedList
 
 router = APIRouter()
 encryptor = EncryptorBase()
 
 
-@router.post('/upload-encrypted-data', status_code=201, response_model=list[EncryptedList])
+@router.post('/upload-encrypted-data', status_code=201)
 async def upload_encrypted_data() -> list[str]:
     data = await encryptor._get_encrypted_data()
     encryptor.upload_encrypted_data(data)
@@ -15,7 +14,7 @@ async def upload_encrypted_data() -> list[str]:
     return data
 
 
-@router.post('/upload-decrypted-data', status_code=201, response_model=list[DecryptedList])
+@router.post('/upload-decrypted-data', status_code=201)
 async def upload_decrypted_data() -> list[str]:
     encrypted_data = await encryptor._get_encrypted_data()
     decrypted_data = await encryptor._get_decrypted_data(encrypted_data)
