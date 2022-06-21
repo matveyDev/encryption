@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  server:
+    container_name: server
+    build: ./server
+    entrypoint: ./entrypoint.sh
+    ports:
+      - 80:80
+  sqlite:
+    container_name: sqlite3
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    ports:
+      - 9000:9000

@@ -4,4 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN export SQLALCHEMY_DATABASE_URL=sqlite:///decryptor.db
+RUN pip3 install -r requirements.txt
+
+RUN chmod u+x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
