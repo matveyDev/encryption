@@ -1,14 +1,14 @@
-import requests
-import json
+from fastapi import APIRouter, Response
 
-from fastapi import APIRouter
-
-from settings import API_URL
+from logic import EncryptorUploader
 
 router = APIRouter()
+encryptor = EncryptorUploader()
 
 
-@router.get('/get-encrypted-data')
-async def get_encrypted_data() -> None:
-    response = requests.get(API_URL + 'top-secret-data')
-    list_response = json.loads(response.text)
+@router.get('/upload-encrypted-data', status_code=201)
+async def upload_encrypted_data() -> list[str]:
+    data = encryptor._get_encrypted_data()
+    encryptor.upload_database(data)
+
+    return data
