@@ -6,6 +6,10 @@ Install:
 
 -> docker-compose up --build
 
+Если есть проблема с контейнерами:
+
+-> docker container prune
+
 docs:
 
 http://0.0.0.0/docs
