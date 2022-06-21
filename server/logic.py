@@ -83,4 +83,4 @@ class EncryptorBase(EncryptorAPI):
             
         RESULT['result'] = result
         data = json.dumps(RESULT)
-        _ = requests.post(url=self.url_result, data=data)
+        _ = requests.post(url=self.url_result, json=data)
